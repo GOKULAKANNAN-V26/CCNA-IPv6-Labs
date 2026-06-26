@@ -1,52 +1,58 @@
-# CCNA IPv6 Labs
+# Lab 3 - SLAAC (Stateless Address Auto Configuration)
 
-This repository contains hands-on Cisco Packet Tracer labs covering IPv6 concepts required for the Cisco CCNA (200-301) certification.
+## Objective
 
-## Labs Included
+Configure SLAAC and observe how a host automatically receives IPv6 addressing information through Router Advertisements (RA).
 
-### Lab 1 - Basic IPv6 Configuration
-- IPv6 Unicast Routing
-- Global Unicast Address
-- Link-Local Address
-- IPv6 Verification Commands
+## Topology
 
-### Lab 2 - EUI-64
-- Automatic Interface ID Generation
-- MAC Address to IPv6 Conversion
+PC1 -------- R1
 
-### Lab 3 - SLAAC
+## Configuration
+
+### Router
+
+```bash
+ipv6 unicast-routing
+
+interface g0/0
+ ipv6 address 2001:DB8:1:1::1/64
+ no shutdown
+```
+
+### PC
+
+Desktop → IP Configuration
+
+Select:
+
+IPv6 Auto Config
+
+## Verification Commands
+
+### Router
+
+```bash
+show ipv6 interface brief
+show ipv6 neighbors
+```
+
+### PC
+
+```bash
+ipconfig
+ping 2001:DB8:1:1::1
+```
+
+## Concepts Learned
+
+- SLAAC
 - Router Solicitation (RS)
 - Router Advertisement (RA)
 - Automatic IPv6 Address Assignment
+- Link-Local Address
+- Neighbor Discovery Protocol (NDP)
 
-### Lab 4 - Stateless DHCPv6
-- O Flag
-- DNS Information via DHCPv6
-- SLAAC + DHCPv6
+## Expected Outcome
 
-### Lab 5 - Stateful DHCPv6
-- M Flag
-- DHCPv6 Address Assignment
-- DHCPv6 Bindings
-
-## Tools Used
-
-- Cisco Packet Tracer
-- Cisco IOS
-- IPv6
-
-## Topics Covered
-
-- IPv6 Address Types
-- Link-Local Addresses
-- EUI-64
-- SLAAC
-- Stateless DHCPv6
-- Stateful DHCPv6
-- IPv6 Verification Commands
-
-## Author
-
-Gokulakannan V
-B.Tech CSE
-Vel Tech University
+The PC automatically learns the IPv6 prefix, generates its own IPv6 address, and learns the default gateway from Router Advertisements.
