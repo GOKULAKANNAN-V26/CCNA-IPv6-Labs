@@ -1,52 +1,58 @@
-# CCNA IPv6 Labs
+# Lab 5 - Stateful DHCPv6
 
-This repository contains hands-on Cisco Packet Tracer labs covering IPv6 concepts required for the Cisco CCNA (200-301) certification.
+## Objective
 
-## Labs Included
+Configure Stateful DHCPv6 and understand how a DHCPv6 server assigns IPv6 addresses, DNS information, and domain information to clients.
 
-### Lab 1 - Basic IPv6 Configuration
-- IPv6 Unicast Routing
-- Global Unicast Address
-- Link-Local Address
-- IPv6 Verification Commands
+## Topology
 
-### Lab 2 - EUI-64
-- Automatic Interface ID Generation
-- MAC Address to IPv6 Conversion
+PC1 -------- R1
 
-### Lab 3 - SLAAC
-- Router Solicitation (RS)
-- Router Advertisement (RA)
-- Automatic IPv6 Address Assignment
+## Configuration
 
-### Lab 4 - Stateless DHCPv6
-- O Flag
-- DNS Information via DHCPv6
-- SLAAC + DHCPv6
+### DHCPv6 Pool
 
-### Lab 5 - Stateful DHCPv6
-- M Flag
+```bash
+ipv6 dhcp pool STATE_POOL
+ address prefix 2001:DB8:1:1::/64
+ dns-server 2001:DB8::53
+ domain-name ccna.local
+```
+
+### Interface Configuration
+
+```bash
+interface g0/0
+ ipv6 address 2001:DB8:1:1::1/64
+ ipv6 nd managed-config-flag
+ ipv6 dhcp server STATE_POOL
+ no shutdown
+```
+
+### PC
+
+Desktop → IP Configuration
+
+Select:
+
+IPv6 Auto Config
+
+## Verification Commands
+
+```bash
+show ipv6 dhcp pool
+show ipv6 dhcp binding
+show ipv6 interface g0/0
+```
+
+## Concepts Learned
+
+- Stateful DHCPv6
+- M Flag (Managed Configuration Flag)
 - DHCPv6 Address Assignment
 - DHCPv6 Bindings
+- Router Advertisement (RA)
 
-## Tools Used
+## Expected Outcome
 
-- Cisco Packet Tracer
-- Cisco IOS
-- IPv6
-
-## Topics Covered
-
-- IPv6 Address Types
-- Link-Local Addresses
-- EUI-64
-- SLAAC
-- Stateless DHCPv6
-- Stateful DHCPv6
-- IPv6 Verification Commands
-
-## Author
-
-Gokulakannan V
-B.Tech CSE
-Vel Tech University
+The DHCPv6 server assigns IPv6 addresses, DNS information, and domain information to the host.
